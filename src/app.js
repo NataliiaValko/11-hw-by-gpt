@@ -1,6 +1,9 @@
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import Notiflix from 'notiflix';
+import axios from 'axios';
+import axios from 'axios';
+
 const API_KEY = '33377492-476d22b77d4b85ba3622e340f';
 const API_URL = 'https://pixabay.com/api/';
 
@@ -35,24 +38,35 @@ loadMoreButton.addEventListener('click', () => {
 });
 
 async function fetchImages() {
-  const response = await fetch(
-    `${API_URL}?key=${API_KEY}&q=${searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&page=${currentPage}&per_page=40`
-  );
-  const data = await response.json();
+  try {
+    const { data } = await axios.get(`${API_URL}`, {
+      params: {
+        key: API_KEY,
+        q: searchQuery,
+        image_type: 'photo',
+        orientation: 'horizontal',
+        safesearch: true,
+        page: currentPage,
+        per_page: 40,
+      },
+    });
 
-  if (data.hits.length === 0 && currentPage === 1) {
-    Notiflix.Notify.warning(
-      'Sorry, there are no images matching your search query. Please try again.'
-    );
-    return;
-  }
+    if (data.hits.length === 0 && currentPage === 1) {
+      Notiflix.Notify.warning(
+        'Sorry, there are no images matching your search query. Please try again.'
+      );
+      return;
+    }
 
-  renderImages(data.hits);
-  checkIfLastPage(data.totalHits);
+    renderImages(data.hits);
+    checkIfLastPage(data.totalHits);
 
-  // Показати повідомлення про кількість знайдених зображень
-  if (currentPage === 1) {
-    Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
+    // Показати повідомлення про кількість знайдених зображень
+    if (currentPage === 1) {
+      Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
+    }
+  } catch (error) {
+    console.error(error);
   }
 }
 
