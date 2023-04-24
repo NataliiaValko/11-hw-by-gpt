@@ -1,0 +1,43 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.search-form {
+    margin: 1rem 0;
+}
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.photo-card {
+    width: 300px;
+    margin: 0.5rem;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.info {
+    display: flex;
+    justify-content: space-around;
+}
+
+.info-item {
+    margin: 0;
+}
+
+.load-more {
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
