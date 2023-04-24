@@ -1,27 +1,27 @@
-import SimpleLightbox from "simplelightbox";
-import "simplelightbox/dist/simple-lightbox.min.css";
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
+import Notiflix from 'notiflix';
+const API_KEY = '33377492-476d22b77d4b85ba3622e340f';
+const API_URL = 'https://pixabay.com/api/';
 
-const API_KEY = "33377492-476d22b77d4b85ba3622e340f";
-const API_URL = "https://pixabay.com/api/";
-
-const form = document.getElementById("search-form");
+const form = document.getElementById('search-form');
 const input = document.querySelector('input[name="searchQuery"]');
-const gallery = document.querySelector(".gallery");
-const loadMoreButton = document.querySelector(".load-more");
+const gallery = document.querySelector('.gallery');
+const loadMoreButton = document.querySelector('.load-more');
 
-let searchQuery = "";
+let searchQuery = '';
 let currentPage = 1;
 
-const lightbox = new SimpleLightbox(".gallery a", {
+const lightbox = new SimpleLightbox('.gallery a', {
   /* опції */
 });
 
-form.addEventListener("submit", (event) => {
+form.addEventListener('submit', event => {
   event.preventDefault();
   searchQuery = input.value.trim();
 
   if (!searchQuery) {
-    Notiflix.Notify.warning("Please enter a search query.");
+    Notiflix.Notify.warning('Please enter a search query.');
     return;
   }
 
@@ -29,7 +29,7 @@ form.addEventListener("submit", (event) => {
   fetchImages();
 });
 
-loadMoreButton.addEventListener("click", () => {
+loadMoreButton.addEventListener('click', () => {
   currentPage++;
   fetchImages();
 });
@@ -42,7 +42,7 @@ async function fetchImages() {
 
   if (data.hits.length === 0 && currentPage === 1) {
     Notiflix.Notify.warning(
-      "Sorry, there are no images matching your search query. Please try again."
+      'Sorry, there are no images matching your search query. Please try again.'
     );
     return;
   }
@@ -57,15 +57,15 @@ async function fetchImages() {
 }
 
 function clearGallery() {
-  gallery.innerHTML = "";
+  gallery.innerHTML = '';
   currentPage = 1;
   loadMoreButton.hidden = true;
 }
 
 function renderImages(images) {
-  const markup = images.map((image) => createImageCardMarkup(image)).join("");
+  const markup = images.map(image => createImageCardMarkup(image)).join('');
 
-  gallery.insertAdjacentHTML("beforeend", markup);
+  gallery.insertAdjacentHTML('beforeend', markup);
   lightbox.refresh(); // оновити SimpleLightbox
   scrollToNextPage(); // прокрутка сторінки
 }
@@ -104,11 +104,11 @@ function checkIfLastPage(totalHits) {
 
 function scrollToNextPage() {
   const { height: cardHeight } = document
-    .querySelector(".gallery")
+    .querySelector('.gallery')
     .firstElementChild.getBoundingClientRect();
 
   window.scrollBy({
     top: cardHeight * 2,
-    behavior: "smooth",
+    behavior: 'smooth',
   });
 }
